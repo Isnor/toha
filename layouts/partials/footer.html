@@ -2,7 +2,7 @@
 {{ $footerEnabled      := site.Params.footer.enable             | default true }}
 {{ $navigationEnabled  := site.Params.footer.navigation.enable  | default true }}
 {{ $customMenusEnabled := site.Params.footer.navigation.customMenus | default true }}
-{{ $contactMeEnabled   := site.Params.footer.contactMe.enable   | default true }}
+{{ $contactMeEnabled   := site.Params.footer.contactMe.enable   | default false }}
 {{ $newsletterEnabled  := site.Params.footer.newsletter.enable  | default true }}
 {{ $credentialsEnabled := site.Params.footer.credentials.enable | default true }}
 {{ $disclaimerEnabled  := site.Params.footer.disclaimer.enable  | default false }}
@@ -20,6 +20,10 @@
   {{ $author:= site.Data.author }}
   {{ if (index site.Data site.Language.Lang).author }}
     {{ $author = (index site.Data site.Language.Lang).author }}
+  {{ end }}
+
+  {{ if site.Params.contactMe }}
+    {{ $contactMeEnabled = true }}
   {{ end }}
 
   {{ $sections:= site.Data.sections }}
@@ -114,6 +118,10 @@
               {{ else if (eq $key "github") }}
                 <li><a href={{ printf "https://github.com/%s" $value }} target="_blank" rel="noopener">
                   <span><i class="fab fa-github"></i></span> <span>{{ $value }}</span>
+                </a></li>
+              {{ else if (eq $key "gitlab") }}
+                <li><a href={{ printf "https://gitlab.com/%s" $value }} target="_blank" rel="noopener">
+                  <span><i class="fab fa-gitlab"></i></span> <span>{{ $value }}</span>
                 </a></li>
               {{ else }}
                 <li><span>{{ title $key }}: </span> <span>{{ $value }}</span></li>
